@@ -12,10 +12,11 @@ class RecipeNavbar extends React.Component {
 
 
     render() {
+        const {handleLogout} = this.props;
 
         const loginLink = !this.props.activeUser ? <Nav.Link href="#/login">Login</Nav.Link> : null;
         const signupLink = !this.props.activeUser ? <Nav.Link href="#/signup">Signup</Nav.Link> : null;
-        const logoutLink = this.props.activeUser ? <Nav.Link href="#/logout">Logout</Nav.Link> : null;
+        const logoutLink = this.props.activeUser ? <Nav.Link onClick={() => {handleLogout()}}>Logout</Nav.Link> : null;
 
 
         return (

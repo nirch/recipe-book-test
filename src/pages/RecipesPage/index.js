@@ -16,7 +16,7 @@ class RecipesPage extends React.Component {
     }
         
     render() {
-        const {activeUser, recipes} = this.props;
+        const {activeUser, recipes, handleLogout} = this.props;
 
         if (!activeUser) {
             return <Redirect to="/"/>
@@ -26,7 +26,7 @@ class RecipesPage extends React.Component {
 
         return (
             <div>
-                <RecipeNavbar activeUser={activeUser}/>
+                <RecipeNavbar activeUser={activeUser} handleLogout={handleLogout}/>
                 <Container>
                     <h1>{activeUser.fname}'s Recipes</h1>
                     {recipesView}
