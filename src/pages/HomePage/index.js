@@ -16,7 +16,7 @@ class HomePage extends React.Component {
                 <RecipeNavbar activeUser={this.props.activeUser}/>
                 <Jumbotron>
                     <Container>
-                        <h1 class="display-3">Recipe Book</h1>
+                        <h1 className="display-3">Recipe Book</h1>
                         <p>Master Your Recipes</p>
                         <p>
                             <Button variant="primary" href="#/login">Login</Button>
