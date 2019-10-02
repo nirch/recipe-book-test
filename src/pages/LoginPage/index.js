@@ -1,6 +1,7 @@
 import React from 'react';
 import {Form, Button} from 'react-bootstrap'
 import "./index.css"
+import Users from '../../data-model/Users'
 
 
 class LoginPage extends React.Component {
@@ -28,7 +29,16 @@ class LoginPage extends React.Component {
     login() {
         const {emailInput, pwdInput} = this.state;
 
-        alert(emailInput + pwdInput);
+        Users.login(emailInput, pwdInput).then(activeUser => {
+            if (activeUser) {
+                alert(JSON.stringify(activeUser))
+            } else {
+                alert("incorrect password");
+            }
+        })
+        // alert(emailInput + pwdInput);
+        // alert(Users);
+
     }
 
     render() {
