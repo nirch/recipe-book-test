@@ -9,10 +9,19 @@ import RecipeNavbar from "./components/RecipeNavbar"
 
 class App extends React.Component {
 
+  constructor(props) {
+    super(props);
+    
+    this.state = {
+      activeUser: null
+    }
+  }
+  
+
   render() {
     return (
       <div>
-        <RecipeNavbar/>
+        <RecipeNavbar activeUser={this.state.activeUser}/>
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route path="/login" component={LoginPage} />

@@ -12,6 +12,12 @@ class RecipeNavbar extends React.Component {
 
 
     render() {
+
+        const loginLink = !this.props.activeUser ? <Nav.Link href="#/login">Login</Nav.Link> : null;
+        const signupLink = !this.props.activeUser ? <Nav.Link href="#/signup">Signup</Nav.Link> : null;
+        const logoutLink = this.props.activeUser ? <Nav.Link href="#/logout">Logout</Nav.Link> : null;
+
+
         return (
             <Navbar bg="light" expand="lg">
                 <Navbar.Brand href="/#/">Recipe Book</Navbar.Brand>
@@ -21,9 +27,9 @@ class RecipeNavbar extends React.Component {
                         <Nav.Link href="#home">Recipes</Nav.Link>
                     </Nav>
                     <Nav className="ml-auto">
-                        <Nav.Link href="#/signup">Signup</Nav.Link>
-                        <Nav.Link href="#/login">Login</Nav.Link>
-                        <Nav.Link href="#/logout">Logout</Nav.Link>
+                        {loginLink}
+                        {signupLink}
+                        {logoutLink}
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
