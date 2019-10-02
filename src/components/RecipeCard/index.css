@@ -1,0 +1,8 @@
+.recipe {
+    height: 100%;
+}
+
+.recipe > img {
+    height: 300px;
+    object-fit: cover;
+}

@@ -3,6 +3,7 @@ import RecipeNavbar from '../../components/RecipeNavbar'
 import Users from '../../data-model/Users'
 import { Container } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom'
+import RecipeGallery from '../../components/RecipeGallery'
 
 
 class RecipesPage extends React.Component {
@@ -22,14 +23,14 @@ class RecipesPage extends React.Component {
             return <Redirect to="/"/>
         }
 
-        const recipesView = recipes.map(recipe => <p key={recipe.id}>{recipe.name}</p>) 
+        // const recipesView = recipes.map(recipe => <p key={recipe.id}>{recipe.name}</p>) 
 
         return (
             <div>
                 <RecipeNavbar activeUser={activeUser} handleLogout={handleLogout}/>
                 <Container>
                     <h1>{activeUser.fname}'s Recipes</h1>
-                    {recipesView}
+                    <RecipeGallery recipes={recipes}/>
                 </Container>
             </div>
         );
