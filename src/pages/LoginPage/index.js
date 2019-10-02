@@ -2,6 +2,7 @@ import React from 'react';
 import {Form, Button, Alert} from 'react-bootstrap'
 import "./index.css"
 import Users from '../../data-model/Users'
+import {Redirect} from 'react-router-dom'
 
 
 class LoginPage extends React.Component {
@@ -12,7 +13,8 @@ class LoginPage extends React.Component {
         this.state = {
             emailInput: "",
             pwdInput: "",
-            invalidCredentials: false
+            invalidCredentials: false,
+            loginSuccess: false
         }
 
         this.login = this.login.bind(this);
@@ -32,7 +34,7 @@ class LoginPage extends React.Component {
 
         Users.login(emailInput, pwdInput).then(activeUser => {
             if (activeUser) {
-                alert(JSON.stringify(activeUser))
+                this.setState({loginSuccess: true});
             } else {
                 this.setState({invalidCredentials: true});
             }
@@ -42,6 +44,9 @@ class LoginPage extends React.Component {
     render() {
 
 
+        if (this.state.loginSuccess) {
+            return <Redirect to="/recipes"/>
+        }
 
         return (
             <div className="login">

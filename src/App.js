@@ -4,6 +4,7 @@ import logo from './logo.svg';
 import './App.css';
 import HomePage from './pages/HomePage/'
 import LoginPage from './pages/LoginPage/'
+import RecipesPage from './pages/RecipesPage/'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 class App extends React.Component {
@@ -25,7 +26,7 @@ class App extends React.Component {
             <HomePage activeUser={this.state.activeUser}/>
           </Route>
           <Route path="/login" component={LoginPage} />
-          {/* <Route path="/recipes" component={RecipesPage}/> */}
+          <Route path="/recipes" component={RecipesPage}/>
         </Switch>
       </div>
     );

@@ -18,7 +18,12 @@ function login(email, pwd) {
     });
 }
 
+function logout() {
+    activeUser = null;
+}
+
 export default {
     getActiveUser,
-    login
+    login,
+    logout
 };
