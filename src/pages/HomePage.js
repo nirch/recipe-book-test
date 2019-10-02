@@ -1,11 +1,15 @@
 import React from 'react';
+import Container from 'react-bootstrap/Container';
+
 
 class HomePage extends React.Component {
     render() {
         return (
-            <div>
-                Home
-            </div>
+            <Container>
+                <div>
+                    Home
+                </div>
+            </Container>
         );
     }
 }
