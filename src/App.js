@@ -2,10 +2,10 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom'
 import logo from './logo.svg';
 import './App.css';
-import HomePage from './pages/HomePage'
-import LoginPage from './pages/LoginPage'
+import HomePage from './pages/HomePage/'
+import LoginPage from './pages/LoginPage/'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import RecipeNavbar from "./components/RecipeNavbar"
+import RecipeNavbar from "./components/RecipeNavbar/"
 
 class App extends React.Component {
 
