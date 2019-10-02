@@ -5,7 +5,6 @@ import './App.css';
 import HomePage from './pages/HomePage/'
 import LoginPage from './pages/LoginPage/'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import RecipeNavbar from "./components/RecipeNavbar/"
 
 class App extends React.Component {
 
@@ -21,9 +20,10 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <RecipeNavbar activeUser={this.state.activeUser}/>
         <Switch>
-          <Route exact path="/" component={HomePage} />
+          <Route exact path="/">
+            <HomePage activeUser={this.state.activeUser}/>
+          </Route>
           <Route path="/login" component={LoginPage} />
           {/* <Route path="/recipes" component={RecipesPage}/> */}
         </Switch>
