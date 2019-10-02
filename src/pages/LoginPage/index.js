@@ -1,7 +1,7 @@
 import React from 'react';
 import {Form, Button, Alert} from 'react-bootstrap'
 import "./index.css"
-import Users from '../../data-model/Users'
+// import Users from '../../data-model/Users'
 import {Redirect} from 'react-router-dom'
 
 
@@ -11,8 +11,8 @@ class LoginPage extends React.Component {
         super(props);
         
         this.state = {
-            emailInput: "",
-            pwdInput: "",
+            emailInput: "nir@nir.com",
+            pwdInput: "123",
             invalidCredentials: false,
             loginSuccess: false
         }
@@ -31,14 +31,21 @@ class LoginPage extends React.Component {
 
     login() {
         const {emailInput, pwdInput} = this.state;
+        const {users, handleLogin} = this.props;
 
-        Users.login(emailInput, pwdInput).then(activeUser => {
-            if (activeUser) {
-                this.setState({loginSuccess: true});
-            } else {
-                this.setState({invalidCredentials: true});
+        let activeUser = null;
+        for (let i = 0; i < users.length && !activeUser; i++) {
+            if (users[i].email === emailInput && users[i].pwd === pwdInput) {
+                activeUser = users[i];
             }
-        })
+        }
+
+        if (activeUser) {
+            handleLogin(activeUser);
+            this.setState({loginSuccess: true});
+        } else {
+            this.setState({invalidCredentials: true});
+        }
     }
 
     render() {

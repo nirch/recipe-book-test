@@ -6,6 +6,9 @@ import HomePage from './pages/HomePage/'
 import LoginPage from './pages/LoginPage/'
 import RecipesPage from './pages/RecipesPage/'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import allUsers from './data-model/data/users'
+import allRecipes from './data-model/data/recipes'
+
 
 class App extends React.Component {
 
@@ -13,20 +16,36 @@ class App extends React.Component {
     super(props);
     
     this.state = {
-      activeUser: null
+      activeUser: null,
+      allRecipes,
+      allUsers,
+      activeUserRecipes: null,
     }
+
+    this.handleLogin = this.handleLogin.bind(this);
   }
-  
+
+  handleLogin(activeUser) {
+    const activeUserRecipes = allRecipes.filter(recipe => recipe.userId === activeUser.id);
+    this.setState({activeUser, activeUserRecipes});
+  }
+
 
   render() {
+    const {activeUser, allUsers, activeUserRecipes} = this.state;
+
     return (
       <div>
         <Switch>
           <Route exact path="/">
-            <HomePage activeUser={this.state.activeUser}/>
+            <HomePage activeUser={activeUser}/>
           </Route>
-          <Route path="/login" component={LoginPage} />
-          <Route path="/recipes" component={RecipesPage}/>
+          <Route path="/login">
+            <LoginPage users={allUsers} handleLogin={this.handleLogin}/>
+          </Route>          
+          <Route path="/recipes">
+            <RecipesPage activeUser={activeUser} recipes={activeUserRecipes}/>
+          </Route>
         </Switch>
       </div>
     );
