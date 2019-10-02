@@ -3,11 +3,13 @@ import Container from 'react-bootstrap/Container';
 
 
 class HomePage extends React.Component {
+
+
     render() {
         return (
             <Container>
                 <div>
-                    Home
+                    home
                 </div>
             </Container>
         );
