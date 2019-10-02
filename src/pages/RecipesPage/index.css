@@ -1,0 +1,8 @@
+.greeting {
+    display: flex;
+    align-items: center;
+}
+
+.greeting > button {
+    margin-left: auto;
+}

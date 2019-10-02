@@ -1,9 +1,10 @@
 import React from 'react'
 import RecipeNavbar from '../../components/RecipeNavbar'
 import Users from '../../data-model/Users'
-import { Container } from 'react-bootstrap';
+import { Container, Button } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom'
 import RecipeGallery from '../../components/RecipeGallery'
+import './index.css'
 
 
 class RecipesPage extends React.Component {
@@ -29,7 +30,10 @@ class RecipesPage extends React.Component {
             <div>
                 <RecipeNavbar activeUser={activeUser} handleLogout={handleLogout}/>
                 <Container>
-                    <h1>{activeUser.fname}'s Recipes</h1>
+                    <div className="greeting">
+                        <h1>{activeUser.fname}'s Recipes</h1>
+                        <Button variant="primary">New Recipe</Button>
+                    </div>
                     <RecipeGallery recipes={recipes}/>
                 </Container>
             </div>
