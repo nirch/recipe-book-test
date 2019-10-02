@@ -1,5 +1,5 @@
 import React from 'react';
-import {Form, Button} from 'react-bootstrap'
+import {Form, Button, Alert} from 'react-bootstrap'
 import "./index.css"
 import Users from '../../data-model/Users'
 
@@ -11,7 +11,8 @@ class LoginPage extends React.Component {
         
         this.state = {
             emailInput: "",
-            pwdInput: ""
+            pwdInput: "",
+            invalidCredentials: false
         }
 
         this.login = this.login.bind(this);
@@ -33,19 +34,22 @@ class LoginPage extends React.Component {
             if (activeUser) {
                 alert(JSON.stringify(activeUser))
             } else {
-                alert("incorrect password");
+                this.setState({invalidCredentials: true});
             }
         })
-        // alert(emailInput + pwdInput);
-        // alert(Users);
-
     }
 
     render() {
+
+
+
         return (
             <div className="login">
                 <h1>Login to Recipe Book</h1>
                 <p>or <a href="#/signup">create an account</a></p>
+                <Alert show={this.state.invalidCredentials} variant="danger">
+                    Invalid email or password!
+                </Alert>                 
                 <Form>
                     <Form.Group controlId="formBasicEmail">
                         <Form.Label>Email address</Form.Label>
