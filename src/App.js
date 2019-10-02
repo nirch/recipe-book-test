@@ -3,6 +3,7 @@ import { Switch, Route } from 'react-router-dom'
 import logo from './logo.svg';
 import './App.css';
 import HomePage from './pages/HomePage'
+import LoginPage from './pages/LoginPage'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Navbar, Nav, NavDropdown, Form, FormControl, Button} from 'react-bootstrap'
 
@@ -12,7 +13,7 @@ function App() {
   return (
     <div>
       <Navbar bg="light" expand="lg">
-        <Navbar.Brand href="/">Recipe Book</Navbar.Brand>
+        <Navbar.Brand href="/#/">Recipe Book</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
@@ -27,8 +28,8 @@ function App() {
       </Navbar>
       <Switch>
         <Route exact path="/" component={HomePage} />
-        {/* <Route path="/login" component={LoginPage}/>
-      <Route path="/recipes" component={RecipesPage}/> */}
+        <Route path="/login" component={LoginPage}/>
+      {/* <Route path="/recipes" component={RecipesPage}/> */}
       </Switch>
     </div>
   );
