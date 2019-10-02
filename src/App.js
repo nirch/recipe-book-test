@@ -24,10 +24,11 @@ class App extends React.Component {
 
     this.handleLogin = this.handleLogin.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
+    this.addRecipe = this.addRecipe.bind(this);
   }
 
   handleLogin(activeUser) {
-    const activeUserRecipes = allRecipes.filter(recipe => recipe.userId === activeUser.id);
+    const activeUserRecipes = this.state.allRecipes.filter(recipe => recipe.userId === activeUser.id);
     this.setState({activeUser, activeUserRecipes});
   }
 
@@ -36,6 +37,16 @@ class App extends React.Component {
       activeUser: null,
       activeUserRecipes: null
     })
+  }
+
+  addRecipe(recipe) {
+    recipe.id = this.state.allRecipes[this.state.allRecipes.length - 1].id + 1;
+    recipe.userId = this.state.activeUser.id;
+
+    const allRecipes = this.state.allRecipes.concat(recipe);
+    const activeUserRecipes = this.state.activeUserRecipes.concat(recipe);
+
+    this.setState({allRecipes, activeUserRecipes});
   }
 
   render() {
@@ -51,7 +62,8 @@ class App extends React.Component {
             <LoginPage users={allUsers} handleLogin={this.handleLogin}/>
           </Route>          
           <Route path="/recipes">
-            <RecipesPage activeUser={activeUser} recipes={activeUserRecipes} handleLogout={this.handleLogout}/>
+            <RecipesPage activeUser={activeUser} recipes={activeUserRecipes} handleLogout={this.handleLogout}
+              addRecipe={this.addRecipe}/>
           </Route>
         </Switch>
       </div>
