@@ -4,6 +4,8 @@ import { Container, Button, Modal, Form, Row, Col } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom'
 import RecipeGallery from '../../components/RecipeGallery'
 import './index.css'
+import Parse from 'parse'
+import { Recipe } from '../../data-model/Recipe';
 
 
 class RecipesPage extends React.Component {
@@ -12,7 +14,8 @@ class RecipesPage extends React.Component {
         super(props);
 
         this.state = {
-            showModal: false
+            showModal: false,
+            recipes: []
         }
 
         this.showModal = this.showModal.bind(this);
@@ -40,12 +43,28 @@ class RecipesPage extends React.Component {
         }
 
         this.props.addRecipe(newRecipe);
-        this.setState({showModal: false});
+        this.setState({ showModal: false });
+    }
+
+    componentDidMount() {
+        if (this.props.activeUser) {
+
+            const RecipeParse = Parse.Object.extend('Recipe');
+            const query = new Parse.Query(RecipeParse);
+            query.equalTo("userId", Parse.User.current());
+            query.find().then((results) => {
+                console.log('Recipe found', results);
+                const recipes = results.map(result => new Recipe(result));
+                this.setState({recipes});
+            }, (error) => {
+                console.error('Error while fetching Recipe', error);
+            });
+        }
     }
 
     render() {
-        const { activeUser, recipes, handleLogout } = this.props;
-        const { showModal } = this.state;
+        const { activeUser, handleLogout } = this.props;
+        const { showModal, recipes } = this.state;
 
         if (!activeUser) {
             return <Redirect to="/" />

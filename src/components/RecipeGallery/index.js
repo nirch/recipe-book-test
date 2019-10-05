@@ -12,7 +12,7 @@ class RecipeGallery extends React.Component {
     render() {
 
         const recipes = this.props.recipes.map(recipe =>
-            <Col lg="4" md="6" key={recipe.id}>
+            <Col lg="4" md="6" key={recipe.id} className="my-1">
                 <RecipeCard recipe={recipe}/>
             </Col>
         )

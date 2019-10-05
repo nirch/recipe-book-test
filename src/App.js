@@ -6,7 +6,6 @@ import HomePage from './pages/HomePage/'
 import LoginPage from './pages/LoginPage/'
 import RecipesPage from './pages/RecipesPage/'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import allRecipes from './data-model/data/recipes'
 
 
 class App extends React.Component {
@@ -16,7 +15,6 @@ class App extends React.Component {
     
     this.state = {
       activeUser: null,
-      allRecipes,
       activeUserRecipes: null,
     }
 
@@ -26,8 +24,7 @@ class App extends React.Component {
   }
 
   handleLogin(activeUser) {
-    const activeUserRecipes = this.state.allRecipes.filter(recipe => recipe.userId === activeUser.id);
-    this.setState({activeUser, activeUserRecipes});
+    this.setState({activeUser});
   }
 
   handleLogout() {
@@ -38,13 +35,13 @@ class App extends React.Component {
   }
 
   addRecipe(recipe) {
-    recipe.id = this.state.allRecipes[this.state.allRecipes.length - 1].id + 1;
-    recipe.userId = this.state.activeUser.id;
+    // recipe.id = this.state.allRecipes[this.state.allRecipes.length - 1].id + 1;
+    // recipe.userId = this.state.activeUser.id;
 
-    const allRecipes = this.state.allRecipes.concat(recipe);
-    const activeUserRecipes = this.state.activeUserRecipes.concat(recipe);
+    // const allRecipes = this.state.allRecipes.concat(recipe);
+    // const activeUserRecipes = this.state.activeUserRecipes.concat(recipe);
 
-    this.setState({allRecipes, activeUserRecipes});
+    // this.setState({allRecipes, activeUserRecipes});
   }
 
   render() {
@@ -60,7 +57,7 @@ class App extends React.Component {
             <LoginPage handleLogin={this.handleLogin}/>
           </Route>          
           <Route path="/recipes">
-            <RecipesPage activeUser={activeUser} recipes={activeUserRecipes} handleLogout={this.handleLogout}
+            <RecipesPage activeUser={activeUser} handleLogout={this.handleLogout}
               addRecipe={this.addRecipe}/>
           </Route>
         </Switch>
