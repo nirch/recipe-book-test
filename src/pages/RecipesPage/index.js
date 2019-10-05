@@ -1,6 +1,6 @@
 import React from 'react'
 import RecipeNavbar from '../../components/RecipeNavbar'
-import { Container, Button, Modal, Form, Row, Col } from 'react-bootstrap';
+import { Container, Button, Modal, Form, Row, Col, Image } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom'
 import RecipeGallery from '../../components/RecipeGallery'
 import './index.css'
@@ -15,16 +15,30 @@ class RecipesPage extends React.Component {
 
         this.state = {
             showModal: false,
-            recipes: []
+            recipes: [],
+            newRecipeImg: ""
         }
 
         this.showModal = this.showModal.bind(this);
         this.hideModal = this.hideModal.bind(this);
         this.createRecipe = this.createRecipe.bind(this);
+        this.imgChange = this.imgChange.bind(this);
 
         this.nameInput = React.createRef();
         this.descInput = React.createRef();
         this.imgInput = React.createRef();
+    }
+
+    imgChange(ev) {
+        const imgFile = ev.target.files[0];
+        if (imgFile) {
+            const newRecipeImg = window.URL.createObjectURL(imgFile);
+            console.log(newRecipeImg);
+            this.setState({newRecipeImg});
+        } else {
+            const newRecipeImg = "";
+            this.setState({newRecipeImg});
+        }
     }
 
     showModal() {
@@ -32,7 +46,7 @@ class RecipesPage extends React.Component {
     }
 
     hideModal() {
-        this.setState({ showModal: false });
+        this.setState({ showModal: false,  newRecipeImg: ""});
     }
 
     createRecipe() {
@@ -64,7 +78,7 @@ class RecipesPage extends React.Component {
 
     render() {
         const { activeUser, handleLogout } = this.props;
-        const { showModal, recipes } = this.state;
+        const { showModal, recipes, newRecipeImg } = this.state;
 
         if (!activeUser) {
             return <Redirect to="/" />
@@ -111,8 +125,11 @@ class RecipesPage extends React.Component {
                                 <Form.Label column sm={2}>
                                     Image URL
                                 </Form.Label>
-                                <Col sm={10}>
-                                    <Form.Control ref={this.imgInput} type="text" placeholder="Recipe Image URL" />
+                                <Col sm={6}>
+                                    <Form.Control ref={this.imgInput} type="file" placeholder="Recipe Image URL" onChange={this.imgChange}/>
+                                </Col>
+                                <Col sm={4}>
+                                    <Image src={newRecipeImg} fluid/>
                                 </Col>
                             </Form.Group>
                         </Form>
