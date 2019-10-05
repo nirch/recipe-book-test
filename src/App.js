@@ -20,7 +20,6 @@ class App extends React.Component {
 
     this.handleLogin = this.handleLogin.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
-    this.addRecipe = this.addRecipe.bind(this);
   }
 
   handleLogin(activeUser) {
@@ -34,18 +33,8 @@ class App extends React.Component {
     })
   }
 
-  addRecipe(recipe) {
-    // recipe.id = this.state.allRecipes[this.state.allRecipes.length - 1].id + 1;
-    // recipe.userId = this.state.activeUser.id;
-
-    // const allRecipes = this.state.allRecipes.concat(recipe);
-    // const activeUserRecipes = this.state.activeUserRecipes.concat(recipe);
-
-    // this.setState({allRecipes, activeUserRecipes});
-  }
-
   render() {
-    const {activeUser, activeUserRecipes} = this.state;
+    const {activeUser } = this.state;
 
     return (
       <div>
@@ -57,8 +46,7 @@ class App extends React.Component {
             <LoginPage handleLogin={this.handleLogin}/>
           </Route>          
           <Route path="/recipes">
-            <RecipesPage activeUser={activeUser} handleLogout={this.handleLogout}
-              addRecipe={this.addRecipe}/>
+            <RecipesPage activeUser={activeUser} handleLogout={this.handleLogout}/>
           </Route>
         </Switch>
       </div>

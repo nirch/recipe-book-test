@@ -16,7 +16,10 @@ class RecipesPage extends React.Component {
         this.state = {
             showModal: false,
             recipes: [],
-            newRecipeImg: ""
+            newRecipeImg: {
+                file: null,
+                URL: ""
+            }
         }
 
         this.showModal = this.showModal.bind(this);
@@ -30,15 +33,15 @@ class RecipesPage extends React.Component {
     }
 
     imgChange(ev) {
-        const imgFile = ev.target.files[0];
-        if (imgFile) {
-            const newRecipeImg = window.URL.createObjectURL(imgFile);
-            console.log(newRecipeImg);
-            this.setState({newRecipeImg});
+        let newRecipeImg = {};
+        newRecipeImg.file = ev.target.files[0];
+        if (newRecipeImg.file) {
+            newRecipeImg.URL = window.URL.createObjectURL(newRecipeImg.file);
+            console.log(newRecipeImg.URL);
         } else {
-            const newRecipeImg = "";
-            this.setState({newRecipeImg});
+            newRecipeImg.URL = "";
         }
+        this.setState({ newRecipeImg });
     }
 
     showModal() {
@@ -46,18 +49,31 @@ class RecipesPage extends React.Component {
     }
 
     hideModal() {
-        this.setState({ showModal: false,  newRecipeImg: ""});
+        this.setState({ showModal: false, newRecipeImg: {file: null, URL: ""}});
     }
 
     createRecipe() {
-        const newRecipe = {
-            name: this.nameInput.current.value,
-            desc: this.descInput.current.value,
-            img: this.imgInput.current.value
-        }
 
-        this.props.addRecipe(newRecipe);
-        this.setState({ showModal: false });
+        const RecipeParse = Parse.Object.extend('Recipe');
+        const newRecipe = new RecipeParse();
+
+        newRecipe.set('name', this.nameInput.current.value);
+        newRecipe.set('desc', this.descInput.current.value);
+        newRecipe.set('image', new Parse.File(this.nameInput.current.value + ".jpg", this.state.newRecipeImg.file));
+        newRecipe.set('userId', Parse.User.current());
+
+        newRecipe.save().then(result => {
+            //   if (typeof document !== 'undefined') document.write(`Recipe created: ${JSON.stringify(result)}`);
+            console.log('Recipe created', result);
+            const recipes = this.state.recipes.concat(new Recipe(result));
+            this.setState({ recipes, showModal: false, newRecipeImg: {file: null, URL: ""} });
+
+
+        }, error => {
+            if (typeof document !== 'undefined') document.write(`Error while creating Recipe: ${JSON.stringify(error)}`);
+            console.error('Error while creating Recipe: ', error);
+        }
+        );
     }
 
     componentDidMount() {
@@ -69,7 +85,7 @@ class RecipesPage extends React.Component {
             query.find().then((results) => {
                 console.log('Recipe found', results);
                 const recipes = results.map(result => new Recipe(result));
-                this.setState({recipes});
+                this.setState({ recipes });
             }, (error) => {
                 console.error('Error while fetching Recipe', error);
             });
@@ -126,10 +142,10 @@ class RecipesPage extends React.Component {
                                     Image URL
                                 </Form.Label>
                                 <Col sm={6}>
-                                    <Form.Control ref={this.imgInput} type="file" placeholder="Recipe Image URL" onChange={this.imgChange}/>
+                                    <Form.Control ref={this.imgInput} type="file" placeholder="Recipe Image URL" onChange={this.imgChange} />
                                 </Col>
                                 <Col sm={4}>
-                                    <Image src={newRecipeImg} fluid/>
+                                    <Image src={newRecipeImg.URL} fluid />
                                 </Col>
                             </Form.Group>
                         </Form>
